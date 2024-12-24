@@ -1,0 +1,19 @@
+node_modules/
+.nx/
+lib/
+.env
+.vscode/launch.json
+plugins/.DS_Store
+lerna-debug.log
+.DS_Store
+
+docs
+
+# Yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

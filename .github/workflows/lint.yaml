@@ -1,0 +1,29 @@
+name: yarnci-lint
+on:
+  push:
+    tags:
+      - v*
+    branches:
+      - main
+  pull_request:
+permissions:
+  contents: read
+
+jobs:
+  yarnci:
+    permissions:
+      contents: read  # for actions/checkout to fetch code
+      pull-requests: read  # for yarnci/yarnci-lint-action to fetch pull requests
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: lts/*
+      - name: install
+        run: npm install --frozen-lockfile
+      - name: lint
+        run: npm run lint
