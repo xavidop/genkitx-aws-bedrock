@@ -41,34 +41,30 @@ if you are using Genkit version `<v0.9.0`, please use the plugin version `v1.9.0
 
 ### Configuration
 
-To use the plugin, you need to configure it with your GitHub Token key. You can do this by calling the `genkit` function:
+To use the plugin, you need to configure it with your AWS credentials key. You can do this by calling the `genkit` function:
 
 ```typescript
 import { genkit, z } from 'genkit';
-import {github, openAIGpt4o} from "genkitx-aws-bedrock";
+import {awsBedrock, amazonNovaProV1} from "genkitx-aws-bedrock";
 
 const ai = genkit({
   plugins: [
-    github({
-      githubToken: '<my-github-token>',
-    }),
-    model: openAIGpt4o,
+    awsBedrock({ region: "<my-region>" }),
+    model: amazonNovaProV1,
   ]
 });
 ```
 
-You can also intialize the plugin in this way if you have set the `GITHUB_TOKEN` environment variable:
+You can also intialize the plugin in this way if you have set the `AWS_` environment variable:
 
 ```typescript
 import { genkit, z } from 'genkit';
-import {github, openAIGpt4o} from "genkitx-aws-bedrock";
+import {awsBedrock, amazonNovaProV1} from "genkitx-aws-bedrock";
 
 const ai = genkit({
   plugins: [
-    github({
-      githubToken: '<my-github-token>',
-    }),
-    model: openAIGpt4o,
+    awsBedrock(),
+    model: amazonNovaProV1,
   ]
 });
 ```
@@ -79,7 +75,7 @@ The simplest way to call the text generation model is by using the helper functi
 
 ```typescript
 import { genkit, z } from 'genkit';
-import {github, openAIGpt4o} from "genkitx-aws-bedrock";
+import {awsBedrock, amazonNovaProV1} from "genkitx-aws-bedrock";
 
 // Basic usage of an LLM
 const response = await ai.generate({
