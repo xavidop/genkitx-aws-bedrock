@@ -8,6 +8,8 @@ import {
 import {
   awsBedrockModel,
   amazonNovaProV1,
+  anthropicClaude35HaikuV1,
+  anthropicClaude35SonnetV1,
   SUPPORTED_AWS_BEDROCK_MODELS,
 } from "./aws_bedrock_llms.js";
 import {
@@ -16,7 +18,7 @@ import {
   SUPPORTED_EMBEDDING_MODELS,
 } from "./aws_bedrock_embedders.js";
 
-export { amazonNovaProV1 };
+export { amazonNovaProV1, anthropicClaude35HaikuV1, anthropicClaude35SonnetV1 };
 
 export { amazonTitanEmbedTextV2 };
 

@@ -58,6 +58,38 @@ export const amazonNovaProV1 = modelRef({
     supports: {
       multiturn: true,
       tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const anthropicClaude35HaikuV1 = modelRef({
+  name: "aws-bedrock/us.anthropic.claude-3-5-haiku-20241022-v1:0",
+  info: {
+    versions: ["us.anthropic.claude-3-5-haiku-20241022-v1:0"],
+    label: "Anthropic - Claude 3.5 Haiku V1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const anthropicClaude35SonnetV1 = modelRef({
+  name: "aws-bedrock/us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+  info: {
+    versions: ["us.anthropic.claude-3-5-sonnet-20241022-v2:0"],
+    label: "Anthropic - Claude 3.5 Haiku V1",
+    supports: {
+      multiturn: true,
+      tools: true,
       media: true,
       systemRole: true,
       output: ["text", "json"],
@@ -68,6 +100,8 @@ export const amazonNovaProV1 = modelRef({
 
 export const SUPPORTED_AWS_BEDROCK_MODELS: Record<string, any> = {
   "amazon.nova-pro-v1:0": amazonNovaProV1,
+  "us.anthropic.claude-3-5-haiku-20241022-v1:0": anthropicClaude35HaikuV1,
+  "us.anthropic.claude-3-5-sonnet-20241022-v2:0": anthropicClaude35SonnetV1,
 };
 
 function toAwsBedrockbRole(role: Role): string {
@@ -92,6 +126,9 @@ function toAwsBedrockbRole(role: Role): string {
 //     input: tool.inputSchema,
 //   };
 // }
+const regex = /data:.*base64,/
+const getDataPart = (dataUrl: string) => dataUrl.replace(regex,"");
+
 
 export function toAwsBedrockTextAndMedia(
   part: Part,
@@ -102,7 +139,7 @@ export function toAwsBedrockTextAndMedia(
       text: part.text,
     };
   } else if (part.media) {
-    const imageBuffer = new Uint8Array(Buffer.from(part.media.url, "base64"));
+    const imageBuffer = new Uint8Array(Buffer.from(getDataPart(part.media.url), "base64"));
 
     return {
       image: {
@@ -140,6 +177,9 @@ export function toAwsBedrockMessages(
     const msg = new Message(message);
     const role = toAwsBedrockbRole(message.role);
     switch (role) {
+      case "system": {
+        break;
+      }
       case "user": {
         const textAndMedia = msg.content.map((part) =>
           toAwsBedrockTextAndMedia(part, imageFormat),
