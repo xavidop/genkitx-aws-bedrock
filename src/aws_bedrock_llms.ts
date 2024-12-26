@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import * as fs from "fs";
 
 import {
   Message,
@@ -103,7 +102,7 @@ export function toAwsBedrockTextAndMedia(
       text: part.text,
     };
   } else if (part.media) {
-    const imageBuffer = new Uint8Array(fs.readFileSync(part.media.url).buffer);
+    const imageBuffer = new Uint8Array(Buffer.from(part.media.url, "base64"));
 
     return {
       image: {

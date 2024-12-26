@@ -10,15 +10,15 @@ import {
   amazonNovaProV1,
   SUPPORTED_AWS_BEDROCK_MODELS,
 } from "./aws_bedrock_llms.js";
-// import {
-//   awsBedrockEmbedder,
-//   openAITextEmbedding3Small,
-//   SUPPORTED_EMBEDDING_MODELS,
-// } from "./aws_bedrock_embedders.js";
+import {
+  awsBedrockEmbedder,
+  amazonTitanEmbedTextV2,
+  SUPPORTED_EMBEDDING_MODELS,
+} from "./aws_bedrock_embedders.js";
 
 export { amazonNovaProV1 };
 
-// export { openAITextEmbedding3Small };
+export { amazonTitanEmbedTextV2 };
 
 export type PluginOptions = BedrockRuntimeClientConfig;
 
@@ -30,9 +30,9 @@ export function awsBedrock(options?: PluginOptions) {
       awsBedrockModel(name, client, ai);
     });
 
-    // Object.keys(SUPPORTED_EMBEDDING_MODELS).forEach((name) =>
-    //   awsBedrockEmbedder(name, ai, options),
-    // );
+    Object.keys(SUPPORTED_EMBEDDING_MODELS).forEach((name) =>
+      awsBedrockEmbedder(name, ai, client),
+    );
   });
 }
 
