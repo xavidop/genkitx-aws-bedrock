@@ -32,7 +32,6 @@ import {
   ModelAction,
   modelRef,
   ToolDefinition,
-  //ToolDefinition,
 } from "genkit/model";
 
 import {
@@ -58,6 +57,150 @@ export const amazonNovaProV1 = modelRef({
   info: {
     versions: ["amazon.nova-pro-v1:0"],
     label: "Amazon - Nova Pro V1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const amazonNovaLiteV1 = modelRef({
+  name: "aws-bedrock/amazon.nova-lite-v1:0",
+  info: {
+    versions: ["amazon.nova-lite-v1:0"],
+    label: "Amazon - Nova Lite V1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const amazonNovaMicroV1 = modelRef({
+  name: "aws-bedrock/amazon.nova-micro-v1:0",
+  info: {
+    versions: ["amazon.nova-micro-v1:0"],
+    label: "Amazon - Nova Micro V1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const amazonTitanTextG1PremierV1 = modelRef({
+  name: "aws-bedrock/amazon.titan-text-premier-v1:0",
+  info: {
+    versions: ["amazon.titan-text-premier-v1:0"],
+    label: "Amazon - Titan Text Premier G1 V1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const amazonTitanTextG1ExpressV1 = modelRef({
+  name: "aws-bedrock/amazon.titan-text-express-v1",
+  info: {
+    versions: ["amazon.titan-text-express-v1"],
+    label: "Amazon - Titan Text Express G1 V1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const amazonTitanTextG1LiteV1 = modelRef({
+  name: "aws-bedrock/amazon.titan-text-lite-v1",
+  info: {
+    versions: ["amazon.titan-text-lite-v1"],
+    label: "Amazon - Titan Text Lite G1 V1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandRV1 = modelRef({
+  name: "aws-bedrock/cohere.command-r-v1:0",
+  info: {
+    versions: ["cohere.command-r-v1:0"],
+    label: "Cohere - Command R",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandRPlusV1 = modelRef({
+  name: "aws-bedrock/cohere.command-r-plus-v1:0",
+  info: {
+    versions: ["cohere.command-r-plus-v1:0"],
+    label: "Cohere - Command R+",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandLightV14 = modelRef({
+  name: "aws-bedrock/cohere.command-light-text-v14",
+  info: {
+    versions: ["cohere.command-light-text-v14"],
+    label: "Cohere - Command Light V14",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandV14 = modelRef({
+  name: "aws-bedrock/cohere.command-text-v14",
+  info: {
+    versions: ["cohere.command-text-v14"],
+    label: "Cohere - Command V14",
     supports: {
       multiturn: true,
       tools: true,
@@ -89,14 +232,54 @@ export const anthropicClaude35HaikuV1 = (
   });
 };
 
-export const anthropicClaude35SonnetV1 = (
+export const anthropicClaude3HaikuV1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`],
+      label: "Anthropic - Claude 3 Haiku V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
+export const anthropicClaude3OpusV1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-opus-20240229-v1:0`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-3-opus-20240229-v1:0`],
+      label: "Anthropic - Claude 3 Opus V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
+export const anthropicClaude35SonnetV2 = (
   infrenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
   return modelRef({
     name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`,
     info: {
-      versions: [`${infrenceRegion}anthropic.claude-3-5-sonnet-20241022-v2:0`],
-      label: "Anthropic - Claude 3.5 Haiku V1",
+      versions: [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`],
+      label: "Anthropic - Claude 3.5 Sonnet V2",
       supports: {
         multiturn: true,
         tools: true,
@@ -109,15 +292,207 @@ export const anthropicClaude35SonnetV1 = (
   });
 };
 
+export const anthropicClaude35SonnetV1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`],
+      label: "Anthropic - Claude 3.5 Sonnet V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
+export const anthropicClaude3SonnetV1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`],
+      label: "Anthropic - Claude 3 Sonnet V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
+export const anthropicClaude21V1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-v2:1`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-v2:1`],
+      label: "Anthropic - Claude 2.1 V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
+export const anthropicClaude2V1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-v2`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-v2`],
+      label: "Anthropic - Claude 2 V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
+export const anthropicClaudeInstantV1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-instant-v1`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-instant-v1`],
+      label: "Anthropic - Claude Instant V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
+
+export const mistralLarge2402V1 = modelRef({
+  name: "aws-bedrock/mistral.mistral-large-2402-v1:0",
+  info: {
+    versions: ["mistral.mistral-large-2402-v1:0"],
+    label: "Mistral - Large (24.02)",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const mistralSmall2402V1 = modelRef({
+  name: "aws-bedrock/mistral.mistral-small-2402-v1:0",
+  info: {
+    versions: ["mistral.mistral-small-2402-v1:0"],
+    label: "Mistral - Small (24.02)",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const mistral7BInstructV02  = modelRef({
+  name: "aws-bedrock/mistral.mistral-7b-instruct-v0:2",
+  info: {
+    versions: ["mistral.mistral-7b-instruct-v0:2"],
+    label: "Mistral - 7B Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const mistral8x7BInstructV01  = modelRef({
+  name: "aws-bedrock/mistral.mixtral-8x7b-instruct-v0:1",
+  info: {
+    versions: ["mistral.mixtral-8x7b-instruct-v0:1"],
+    label: "Mistral - 8x7B Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const SUPPORTED_AWS_BEDROCK_MODELS = (
   infrenceRegion: string = "us",
 ): Record<string, any> => {
   return {
     "amazon.nova-pro-v1:0": amazonNovaProV1,
+    "amazon.nova-lite-v1:0": amazonNovaLiteV1,
+    "amazon.nova-micro-v1:0": amazonNovaMicroV1,
+    "amazon.titan-text-premier-v1:0": amazonTitanTextG1PremierV1,
+    "amazon.titan-text-express-v1": amazonTitanTextG1ExpressV1,
+    "amazon.titan-text-lite-v1": amazonTitanTextG1LiteV1,
+    "cohere.command-r-v1:0": cohereCommandRV1,
+    "cohere.command-r-plus-v1:0": cohereCommandRPlusV1,
+    "cohere.command-light-text-v14": cohereCommandLightV14,
+    "cohere.command-text-v14": cohereCommandV14,
+    "mistral.mistral-large-2402-v1:0": mistralLarge2402V1,
+    "mistral.mistral-small-2402-v1:0": mistralSmall2402V1,
+    "mistral.mistral-7b-instruct-v0:2": mistral7BInstructV02,
+    "mistral.mixtral-8x7b-instruct-v0:1": mistral8x7BInstructV01,
     [`${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`]:
       anthropicClaude35HaikuV1(infrenceRegion),
     [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`]:
+      anthropicClaude35SonnetV2(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`]:
       anthropicClaude35SonnetV1(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-3-opus-20240229-v1:0`]:
+      anthropicClaude3OpusV1(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`]:
+      anthropicClaude3HaikuV1(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`]:
+      anthropicClaude3SonnetV1(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-v2:1`]:
+      anthropicClaude21V1(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-v2`]:
+      anthropicClaude2V1(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-instant-v1`]:
+      anthropicClaudeInstantV1(infrenceRegion),
   };
 };
 
@@ -132,7 +507,7 @@ function toAwsBedrockbRole(role: Role): string {
     case "tool":
       return "tool";
     default:
-      throw new Error(`role ${role} doesn't map to an AWS Bedorck role.`);
+      throw new Error(`role ${role} doesn't map to an AWS Bedrock role.`);
   }
 }
 
@@ -391,15 +766,17 @@ export function toAwsBedrockRequestBody(
     ? request.output?.format
     : request.output?.contentType;
   if (jsonMode && model.info.supports?.output?.includes("json")) {
-    awsBedrockSystemMessage?.push({
-      text: "You write JSON objects based on the given instructions. Please generate only the JSON output. DO NOT provide any preamble.",
+    awsBedrockMessages?.push({
+      content: [{ text: "You write JSON objects based on the given instructions. Please generate only the JSON output. DO NOT provide any preamble." }],
+      role: "user",
     });
   } else if (
     (textMode && model.info.supports?.output?.includes("text")) ||
     model.info.supports?.output?.includes("text")
   ) {
-    awsBedrockSystemMessage?.push({
-      text: "You write objects in plain text. DO NOT provide any preamble.",
+    awsBedrockMessages?.push({
+      content: [{ text: "You write objects in plain text. DO NOT provide any preamble." }],
+      role: "user",
     });
   } else {
     throw new Error(

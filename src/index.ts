@@ -8,8 +8,27 @@ import {
 import {
   awsBedrockModel,
   amazonNovaProV1,
+  amazonNovaLiteV1,
+  amazonNovaMicroV1,
+  amazonTitanTextG1PremierV1,
+  amazonTitanTextG1ExpressV1,
+  amazonTitanTextG1LiteV1,
+  cohereCommandRV1,
+  cohereCommandRPlusV1,
+  cohereCommandLightV14,
+  cohereCommandV14,
+  mistralLarge2402V1,
+  mistralSmall2402V1,
+  mistral7BInstructV02,
+  mistral8x7BInstructV01,
   anthropicClaude35HaikuV1,
-  anthropicClaude35SonnetV1,
+  anthropicClaude35SonnetV2,
+  anthropicClaude3OpusV1,
+  anthropicClaude3HaikuV1,
+  anthropicClaude3SonnetV1,
+  anthropicClaude21V1,
+  anthropicClaude2V1,
+  anthropicClaudeInstantV1,
   SUPPORTED_AWS_BEDROCK_MODELS,
 } from "./aws_bedrock_llms.js";
 import {
@@ -18,7 +37,30 @@ import {
   SUPPORTED_EMBEDDING_MODELS,
 } from "./aws_bedrock_embedders.js";
 
-export { amazonNovaProV1, anthropicClaude35HaikuV1, anthropicClaude35SonnetV1 };
+export {
+  amazonNovaProV1,
+  amazonNovaLiteV1,
+  amazonNovaMicroV1,
+  amazonTitanTextG1PremierV1,
+  amazonTitanTextG1ExpressV1,
+  amazonTitanTextG1LiteV1,
+  cohereCommandRV1,
+  cohereCommandRPlusV1,
+  cohereCommandLightV14,
+  cohereCommandV14,
+  mistralLarge2402V1,
+  mistralSmall2402V1,
+  mistral7BInstructV02,
+  mistral8x7BInstructV01,
+  anthropicClaude35HaikuV1,
+  anthropicClaude35SonnetV2,
+  anthropicClaude3OpusV1,
+  anthropicClaude3HaikuV1,
+  anthropicClaude3SonnetV1,
+  anthropicClaude21V1,
+  anthropicClaude2V1,
+  anthropicClaudeInstantV1,
+};
 
 export { amazonTitanEmbedTextV2 };
 
