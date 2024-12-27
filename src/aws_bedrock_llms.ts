@@ -24,6 +24,7 @@ import {
   Role,
   ToolRequestPart,
   Genkit,
+  ModelReference,
 } from "genkit";
 
 import {
@@ -68,42 +69,56 @@ export const amazonNovaProV1 = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
-export const anthropicClaude35HaikuV1 = modelRef({
-  name: "aws-bedrock/us.anthropic.claude-3-5-haiku-20241022-v1:0",
-  info: {
-    versions: ["us.anthropic.claude-3-5-haiku-20241022-v1:0"],
-    label: "Anthropic - Claude 3.5 Haiku V1",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: false,
-      systemRole: true,
-      output: ["text", "json"],
+export const anthropicClaude35HaikuV1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`,
+    info: {
+      versions: [`${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`],
+      label: "Anthropic - Claude 3.5 Haiku V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const anthropicClaude35SonnetV1 = modelRef({
-  name: "aws-bedrock/us.anthropic.claude-3-5-sonnet-20241022-v2:0",
-  info: {
-    versions: ["us.anthropic.claude-3-5-sonnet-20241022-v2:0"],
-    label: "Anthropic - Claude 3.5 Haiku V1",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: true,
-      systemRole: true,
-      output: ["text", "json"],
+export const anthropicClaude35SonnetV1 = (
+  infrenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`,
+    info: {
+      versions: [`${infrenceRegion}anthropic.claude-3-5-sonnet-20241022-v2:0`],
+      label: "Anthropic - Claude 3.5 Haiku V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const SUPPORTED_AWS_BEDROCK_MODELS: Record<string, any> = {
-  "amazon.nova-pro-v1:0": amazonNovaProV1,
-  "us.anthropic.claude-3-5-haiku-20241022-v1:0": anthropicClaude35HaikuV1,
-  "us.anthropic.claude-3-5-sonnet-20241022-v2:0": anthropicClaude35SonnetV1,
+export const SUPPORTED_AWS_BEDROCK_MODELS = (
+  infrenceRegion: string = "us",
+): Record<string, any> => {
+  return {
+    "amazon.nova-pro-v1:0": amazonNovaProV1,
+    [`${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`]:
+      anthropicClaude35HaikuV1(infrenceRegion),
+    [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`]:
+      anthropicClaude35SonnetV1(infrenceRegion),
+  };
 };
 
 function toAwsBedrockbRole(role: Role): string {
@@ -356,8 +371,9 @@ function fromAwsBedrockChunkChoice(
 export function toAwsBedrockRequestBody(
   modelName: string,
   request: GenerateRequest<typeof GenerationCommonConfigSchema>,
+  inferenceRegion: string,
 ) {
-  const model = SUPPORTED_AWS_BEDROCK_MODELS[modelName];
+  const model = SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[modelName];
   if (!model) throw new Error(`Unsupported model: ${modelName}`);
   const awsBedrockMessages = toAwsBedrockMessages(request.messages);
 
@@ -416,20 +432,22 @@ export function awsBedrockModel(
   name: string,
   client: BedrockRuntimeClient,
   ai: Genkit,
+  inferenceRegion: string,
 ): ModelAction<typeof GenerationCommonConfigSchema> {
   const modelId = `aws-bedrock/${name}`;
-  const model = SUPPORTED_AWS_BEDROCK_MODELS[name];
+  const model = SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[name];
   if (!model) throw new Error(`Unsupported model: ${name}`);
 
   return ai.defineModel(
     {
       name: modelId,
       ...model.info,
-      configSchema: SUPPORTED_AWS_BEDROCK_MODELS[name].configSchema,
+      configSchema:
+        SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[name].configSchema,
     },
     async (request, streamingCallback) => {
       let response: ConverseStreamCommandOutput | ConverseCommandOutput;
-      const body = toAwsBedrockRequestBody(name, request);
+      const body = toAwsBedrockRequestBody(name, request, inferenceRegion);
       if (streamingCallback) {
         const command = new ConverseStreamCommand(body);
         response = await client.send(command);
