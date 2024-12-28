@@ -39,8 +39,56 @@ export const amazonTitanEmbedTextV2 = embedderRef({
   name: "aws-bedrock/amazon.titan-embed-text-v2:0",
   configSchema: TextEmbeddingConfigSchema,
   info: {
-    dimensions: 512,
+    dimensions: 1024,
     label: "Amazon - titan-embed-text-v2:0",
+    supports: {
+      input: ["text"],
+    },
+  },
+});
+
+export const amazonTitanEmbedMultimodalV2 = embedderRef({
+  name: "aws-bedrock/amazon.titan-embed-image-v1",
+  configSchema: TextEmbeddingConfigSchema,
+  info: {
+    dimensions: 1024,
+    label: "Amazon - titan-embed-multimodal-v2:0",
+    supports: {
+      input: ["text", "image"],
+    },
+  },
+});
+
+export const amazonTitanEmbedTextG1V1 = embedderRef({
+  name: "aws-bedrock/amazon.titan-embed-text-v1",
+  configSchema: TextEmbeddingConfigSchema,
+  info: {
+    dimensions: 1536,
+    label: "Amazon - titan-embed-text-v1",
+    supports: {
+      input: ["text"],
+    },
+  },
+});
+
+export const cohereEmbedEnglishV3 = embedderRef({
+  name: "aws-bedrock/cohere.embed-english-v3",
+  configSchema: TextEmbeddingConfigSchema,
+  info: {
+    dimensions: 1024,
+    label: "Cohere - embed-english-v3",
+    supports: {
+      input: ["text"],
+    },
+  },
+});
+
+export const cohereEmbedMultilingualV3 = embedderRef({
+  name: "aws-bedrock/cohere.embed-multilingual-v3",
+  configSchema: TextEmbeddingConfigSchema,
+  info: {
+    dimensions: 1024,
+    label: "Cohere - embed-multilingual-v3",
     supports: {
       input: ["text"],
     },
@@ -49,6 +97,10 @@ export const amazonTitanEmbedTextV2 = embedderRef({
 
 export const SUPPORTED_EMBEDDING_MODELS: Record<string, any> = {
   "amazon.titan-embed-text-v2:0": amazonTitanEmbedTextV2,
+  "amazon.titan-embed-image-v1": amazonTitanEmbedMultimodalV2,
+  "amazon.titan-embed-text-v1": amazonTitanEmbedTextG1V1,
+  "cohere.embed-english-v3": cohereEmbedEnglishV3,
+  "cohere.embed-multilingual-v3": cohereEmbedMultilingualV3,
 };
 
 export function awsBedrockEmbedder(

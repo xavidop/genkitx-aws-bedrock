@@ -392,7 +392,6 @@ export const anthropicClaudeInstantV1 = (
   });
 };
 
-
 export const mistralLarge2402V1 = modelRef({
   name: "aws-bedrock/mistral.mistral-large-2402-v1:0",
   info: {
@@ -425,7 +424,7 @@ export const mistralSmall2402V1 = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
-export const mistral7BInstructV02  = modelRef({
+export const mistral7BInstructV02 = modelRef({
   name: "aws-bedrock/mistral.mistral-7b-instruct-v0:2",
   info: {
     versions: ["mistral.mistral-7b-instruct-v0:2"],
@@ -441,11 +440,235 @@ export const mistral7BInstructV02  = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
-export const mistral8x7BInstructV01  = modelRef({
+export const mistral8x7BInstructV01 = modelRef({
   name: "aws-bedrock/mistral.mixtral-8x7b-instruct-v0:1",
   info: {
     versions: ["mistral.mixtral-8x7b-instruct-v0:1"],
     label: "Mistral - 8x7B Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ai21Jamba15LargeV1 = modelRef({
+  name: "aws-bedrock/ai21.jamba-1-5-large-v1:0",
+  info: {
+    versions: ["ai21.jamba-1-5-large-v1:0"],
+    label: "AI21 - Jambda 1.5 Large",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ai21Jamba15MiniV1 = modelRef({
+  name: "aws-bedrock/ai21.jamba-1-5-mini-v1:0",
+  info: {
+    versions: ["ai21.jamba-1-5-mini-v1:0"],
+    label: "AI21 - Jambda 1.5 Mini",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ai21JambaInstructV1 = modelRef({
+  name: "aws-bedrock/ai21.jamba-instruct-v1:0",
+  info: {
+    versions: ["ai21.jamba-instruct-v1:0"],
+    label: "AI21 - Jambda Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ai21Jurassic2MidV1 = modelRef({
+  name: "aws-bedrock/ai21.j2-mid-v1",
+  info: {
+    versions: ["ai21.j2-mid-v1"],
+    label: "AI21 - Jurassic-2 Mid",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ai21Jurassic2UltraV1 = modelRef({
+  name: "aws-bedrock/ai21.j2-ultra-v1",
+  info: {
+    versions: ["ai21.j2-ultra-v1"],
+    label: "AI21 - Jurassic-2 Ultra",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama3370BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-3-70b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-3-70b-instruct-v1:0"],
+    label: "Meta - Llama 3.3 70b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama3211BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-2-11b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-2-11b-instruct-v1:0"],
+    label: "Meta - Llama 3.2 11b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama321BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-2-1b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-2-1b-instruct-v1:0"],
+    label: "Meta - Llama 3.2 1b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama323BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-2-3b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-2-3b-instruct-v1:0"],
+    label: "Meta - Llama 3.2 3b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama3290BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-2-90b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-2-90b-instruct-v1:0"],
+    label: "Meta - Llama 3.2 90b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama3170BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-1-70b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-1-70b-instruct-v1:0"],
+    label: "Meta - Llama 3.1 70b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama318BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-1-8b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-1-8b-instruct-v1:0"],
+    label: "Meta - Llama 3.1 8b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama370BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-70b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-70b-instruct-v1:0"],
+    label: "Meta - Llama 3 70b Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama38BInstruct = modelRef({
+  name: "aws-bedrock/meta.llama3-8b-instruct-v1:0",
+  info: {
+    versions: ["meta.llama3-8b-instruct-v1:0"],
+    label: "Meta - Llama 3 8b Instruct",
     supports: {
       multiturn: true,
       tools: true,
@@ -475,6 +698,20 @@ export const SUPPORTED_AWS_BEDROCK_MODELS = (
     "mistral.mistral-small-2402-v1:0": mistralSmall2402V1,
     "mistral.mistral-7b-instruct-v0:2": mistral7BInstructV02,
     "mistral.mixtral-8x7b-instruct-v0:1": mistral8x7BInstructV01,
+    "ai21.jamba-1-5-large-v1:0": ai21Jamba15LargeV1,
+    "ai21.jamba-1-5-mini-v1:0": ai21Jamba15MiniV1,
+    "ai21.jamba-instruct-v1:0": ai21JambaInstructV1,
+    "ai21.j2-mid-v1": ai21Jurassic2MidV1,
+    "ai21.j2-ultra-v1": ai21Jurassic2UltraV1,
+    "meta.llama3-3-70b-instruct-v1:0": metaLlama3370BInstruct,
+    "meta.llama3-2-11b-instruct-v1:0": metaLlama3211BInstruct,
+    "meta.llama3-2-1b-instruct-v1:0": metaLlama321BInstruct,
+    "meta.llama3-2-3b-instruct-v1:0": metaLlama323BInstruct,
+    "meta.llama3-2-90b-instruct-v1:0": metaLlama3290BInstruct,
+    "meta.llama3-1-70b-instruct-v1:0": metaLlama3170BInstruct,
+    "meta.llama3-1-8b-instruct-v1:0": metaLlama318BInstruct,
+    "meta.llama3-70b-instruct-v1:0": metaLlama370BInstruct,
+    "meta.llama3-8b-instruct-v1:0": metaLlama38BInstruct,
     [`${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`]:
       anthropicClaude35HaikuV1(infrenceRegion),
     [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`]:
@@ -767,7 +1004,11 @@ export function toAwsBedrockRequestBody(
     : request.output?.contentType;
   if (jsonMode && model.info.supports?.output?.includes("json")) {
     awsBedrockMessages?.push({
-      content: [{ text: "You write JSON objects based on the given instructions. Please generate only the JSON output. DO NOT provide any preamble." }],
+      content: [
+        {
+          text: "You write JSON objects based on the given instructions. Please generate only the JSON output. DO NOT provide any preamble.",
+        },
+      ],
       role: "user",
     });
   } else if (
@@ -775,7 +1016,11 @@ export function toAwsBedrockRequestBody(
     model.info.supports?.output?.includes("text")
   ) {
     awsBedrockMessages?.push({
-      content: [{ text: "You write objects in plain text. DO NOT provide any preamble." }],
+      content: [
+        {
+          text: "You write objects in plain text. DO NOT provide any preamble.",
+        },
+      ],
       role: "user",
     });
   } else {
