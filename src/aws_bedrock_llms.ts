@@ -1003,25 +1003,15 @@ export function toAwsBedrockRequestBody(
     ? request.output?.format
     : request.output?.contentType;
   if (jsonMode && model.info.supports?.output?.includes("json")) {
-    awsBedrockMessages?.push({
-      content: [
-        {
-          text: "You write JSON objects based on the given instructions. Please generate only the JSON output. DO NOT provide any preamble.",
-        },
-      ],
-      role: "user",
+    awsBedrockSystemMessage?.push({
+      text: "You write JSON objects based on the given instructions. Please generate only the JSON output. DO NOT provide any preamble.",
     });
   } else if (
     (textMode && model.info.supports?.output?.includes("text")) ||
     model.info.supports?.output?.includes("text")
   ) {
-    awsBedrockMessages?.push({
-      content: [
-        {
-          text: "You write objects in plain text. DO NOT provide any preamble.",
-        },
-      ],
-      role: "user",
+    awsBedrockSystemMessage?.push({
+      text: "You write objects in plain text. DO NOT provide any preamble.",
     });
   } else {
     throw new Error(
@@ -1031,9 +1021,13 @@ export function toAwsBedrockRequestBody(
   const modelString = (request.config?.version ||
     model.version ||
     modelName) as string;
+
   const body: ConverseCommandInput | ConverseStreamCommandInput = {
     messages: awsBedrockMessages,
-    system: awsBedrockSystemMessage as SystemContentBlock[] | undefined,
+    system:
+      model.info.supports.systemRole === true
+        ? (awsBedrockSystemMessage as SystemContentBlock[])
+        : [],
     toolConfig: request.tools
       ? { tools: request.tools.map(toAwsBedrockTool) }
       : undefined,
