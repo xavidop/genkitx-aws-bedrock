@@ -107,9 +107,9 @@ export const amazonTitanTextG1PremierV1 = modelRef({
     label: "Amazon - Titan Text Premier G1 V1",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -123,9 +123,9 @@ export const amazonTitanTextG1ExpressV1 = modelRef({
     label: "Amazon - Titan Text Express G1 V1",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -139,9 +139,9 @@ export const amazonTitanTextG1LiteV1 = modelRef({
     label: "Amazon - Titan Text Lite G1 V1",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -187,9 +187,9 @@ export const cohereCommandLightV14 = modelRef({
     label: "Cohere - Command Light V14",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -203,9 +203,9 @@ export const cohereCommandV14 = modelRef({
     label: "Cohere - Command V14",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -213,12 +213,12 @@ export const cohereCommandV14 = modelRef({
 });
 
 export const anthropicClaude35HaikuV1 = (
-  infrenceRegion: string = "us",
+  inferenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
   return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`,
+    name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`,
     info: {
-      versions: [`${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`],
+      versions: [`${inferenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`],
       label: "Anthropic - Claude 3.5 Haiku V1",
       supports: {
         multiturn: true,
@@ -233,12 +233,12 @@ export const anthropicClaude35HaikuV1 = (
 };
 
 export const anthropicClaude3HaikuV1 = (
-  infrenceRegion: string = "us",
+  inferenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
   return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`,
+    name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`,
     info: {
-      versions: [`${infrenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`],
+      versions: [`${inferenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`],
       label: "Anthropic - Claude 3 Haiku V1",
       supports: {
         multiturn: true,
@@ -253,12 +253,12 @@ export const anthropicClaude3HaikuV1 = (
 };
 
 export const anthropicClaude3OpusV1 = (
-  infrenceRegion: string = "us",
+  inferenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
   return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-opus-20240229-v1:0`,
+    name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-opus-20240229-v1:0`,
     info: {
-      versions: [`${infrenceRegion}.anthropic.claude-3-opus-20240229-v1:0`],
+      versions: [`${inferenceRegion}.anthropic.claude-3-opus-20240229-v1:0`],
       label: "Anthropic - Claude 3 Opus V1",
       supports: {
         multiturn: true,
@@ -273,12 +273,12 @@ export const anthropicClaude3OpusV1 = (
 };
 
 export const anthropicClaude35SonnetV2 = (
-  infrenceRegion: string = "us",
+  inferenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
   return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`,
+    name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`,
     info: {
-      versions: [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`],
+      versions: [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`],
       label: "Anthropic - Claude 3.5 Sonnet V2",
       supports: {
         multiturn: true,
@@ -293,12 +293,12 @@ export const anthropicClaude35SonnetV2 = (
 };
 
 export const anthropicClaude35SonnetV1 = (
-  infrenceRegion: string = "us",
+  inferenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
   return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`,
+    name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`,
     info: {
-      versions: [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`],
+      versions: [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`],
       label: "Anthropic - Claude 3.5 Sonnet V1",
       supports: {
         multiturn: true,
@@ -313,12 +313,12 @@ export const anthropicClaude35SonnetV1 = (
 };
 
 export const anthropicClaude3SonnetV1 = (
-  infrenceRegion: string = "us",
+  inferenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
   return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`,
+    name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`,
     info: {
-      versions: [`${infrenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`],
+      versions: [`${inferenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`],
       label: "Anthropic - Claude 3 Sonnet V1",
       supports: {
         multiturn: true,
@@ -332,65 +332,53 @@ export const anthropicClaude3SonnetV1 = (
   });
 };
 
-export const anthropicClaude21V1 = (
-  infrenceRegion: string = "us",
-): ModelReference<typeof GenerationCommonConfigSchema> => {
-  return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-v2:1`,
-    info: {
-      versions: [`${infrenceRegion}.anthropic.claude-v2:1`],
-      label: "Anthropic - Claude 2.1 V1",
-      supports: {
-        multiturn: true,
-        tools: true,
-        media: false,
-        systemRole: true,
-        output: ["text", "json"],
-      },
+export const anthropicClaude21V1 = modelRef({
+  name: "aws-bedrock/anthropic.claude-v2:1",
+  info: {
+    versions: ["anthropic.claude-v2:1"],
+    label: "Anthropic - Claude 2.1 V1",
+    supports: {
+      multiturn: true,
+      tools: false,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
     },
-    configSchema: GenerationCommonConfigSchema,
-  });
-};
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
 
-export const anthropicClaude2V1 = (
-  infrenceRegion: string = "us",
-): ModelReference<typeof GenerationCommonConfigSchema> => {
-  return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-v2`,
-    info: {
-      versions: [`${infrenceRegion}.anthropic.claude-v2`],
-      label: "Anthropic - Claude 2 V1",
-      supports: {
-        multiturn: true,
-        tools: true,
-        media: false,
-        systemRole: true,
-        output: ["text", "json"],
-      },
+export const anthropicClaude2V1 = modelRef({
+  name: "aws-bedrock/anthropic.claude-v2",
+  info: {
+    versions: ["anthropic.claude-v2"],
+    label: "Anthropic - Claude 2 V1",
+    supports: {
+      multiturn: true,
+      tools: false,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
     },
-    configSchema: GenerationCommonConfigSchema,
-  });
-};
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
 
-export const anthropicClaudeInstantV1 = (
-  infrenceRegion: string = "us",
-): ModelReference<typeof GenerationCommonConfigSchema> => {
-  return modelRef({
-    name: `aws-bedrock/${infrenceRegion}.anthropic.claude-instant-v1`,
-    info: {
-      versions: [`${infrenceRegion}.anthropic.claude-instant-v1`],
-      label: "Anthropic - Claude Instant V1",
-      supports: {
-        multiturn: true,
-        tools: true,
-        media: false,
-        systemRole: true,
-        output: ["text", "json"],
-      },
+export const anthropicClaudeInstantV1 = modelRef({
+  name: "aws-bedrock/anthropic.claude-instant-v1",
+  info: {
+    versions: ["anthropic.claude-instant-v1"],
+    label: "Anthropic - Claude Instant V1",
+    supports: {
+      multiturn: true,
+      tools: false,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
     },
-    configSchema: GenerationCommonConfigSchema,
-  });
-};
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
 
 export const mistralLarge2402V1 = modelRef({
   name: "aws-bedrock/mistral.mistral-large-2402-v1:0",
@@ -431,9 +419,9 @@ export const mistral7BInstructV02 = modelRef({
     label: "Mistral - 7B Instruct",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -447,9 +435,9 @@ export const mistral8x7BInstructV01 = modelRef({
     label: "Mistral - 8x7B Instruct",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -495,9 +483,9 @@ export const ai21JambaInstructV1 = modelRef({
     label: "AI21 - Jambda Instruct",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -511,9 +499,9 @@ export const ai21Jurassic2MidV1 = modelRef({
     label: "AI21 - Jurassic-2 Mid",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
@@ -527,126 +515,154 @@ export const ai21Jurassic2UltraV1 = modelRef({
     label: "AI21 - Jurassic-2 Ultra",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
-      systemRole: true,
+      systemRole: false,
       output: ["text", "json"],
     },
   },
   configSchema: GenerationCommonConfigSchema,
 });
 
-export const metaLlama3370BInstruct = modelRef({
-  name: "aws-bedrock/meta.llama3-3-70b-instruct-v1:0",
-  info: {
-    versions: ["meta.llama3-3-70b-instruct-v1:0"],
-    label: "Meta - Llama 3.3 70b Instruct",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: false,
-      systemRole: true,
-      output: ["text", "json"],
+export const metaLlama3370BInstruct = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.meta.llama3-3-70b-instruct-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.meta.llama3-3-70b-instruct-v1:0`],
+      label: "Meta - Llama 3.3 70b Instruct",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const metaLlama3211BInstruct = modelRef({
-  name: "aws-bedrock/meta.llama3-2-11b-instruct-v1:0",
-  info: {
-    versions: ["meta.llama3-2-11b-instruct-v1:0"],
-    label: "Meta - Llama 3.2 11b Instruct",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: true,
-      systemRole: true,
-      output: ["text", "json"],
+export const metaLlama3211BInstruct = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.meta.llama3-2-11b-instruct-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.meta.llama3-2-11b-instruct-v1:0`],
+      label: "Meta - Llama 3.2 11b Instruct",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const metaLlama321BInstruct = modelRef({
-  name: "aws-bedrock/meta.llama3-2-1b-instruct-v1:0",
-  info: {
-    versions: ["meta.llama3-2-1b-instruct-v1:0"],
-    label: "Meta - Llama 3.2 1b Instruct",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: false,
-      systemRole: true,
-      output: ["text", "json"],
+export const metaLlama321BInstruct = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.meta.llama3-2-1b-instruct-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.meta.llama3-2-1b-instruct-v1:0`],
+      label: "Meta - Llama 3.2 1b Instruct",
+      supports: {
+        multiturn: true,
+        tools: false,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const metaLlama323BInstruct = modelRef({
-  name: "aws-bedrock/meta.llama3-2-3b-instruct-v1:0",
-  info: {
-    versions: ["meta.llama3-2-3b-instruct-v1:0"],
-    label: "Meta - Llama 3.2 3b Instruct",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: false,
-      systemRole: true,
-      output: ["text", "json"],
+export const metaLlama323BInstruct = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.meta.llama3-2-3b-instruct-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.meta.llama3-2-3b-instruct-v1:0`],
+      label: "Meta - Llama 3.2 3b Instruct",
+      supports: {
+        multiturn: true,
+        tools: false,
+        media: false,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const metaLlama3290BInstruct = modelRef({
-  name: "aws-bedrock/meta.llama3-2-90b-instruct-v1:0",
-  info: {
-    versions: ["meta.llama3-2-90b-instruct-v1:0"],
-    label: "Meta - Llama 3.2 90b Instruct",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: true,
-      systemRole: true,
-      output: ["text", "json"],
+export const metaLlama3290BInstruct = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.meta.llama3-2-90b-instruct-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.meta.llama3-2-90b-instruct-v1:0`],
+      label: "Meta - Llama 3.2 90b Instruct",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const metaLlama3170BInstruct = modelRef({
-  name: "aws-bedrock/meta.llama3-1-70b-instruct-v1:0",
-  info: {
-    versions: ["meta.llama3-1-70b-instruct-v1:0"],
-    label: "Meta - Llama 3.1 70b Instruct",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: false,
-      systemRole: true,
-      output: ["text", "json"],
+export const metaLlama3170BInstruct = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.meta.llama3-1-70b-instruct-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.meta.llama3-1-70b-instruct-v1:0`],
+      label: "Meta - Llama 3.1 70b Instruct",
+      supports: {
+        multiturn: true,
+        tools: false,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
-export const metaLlama318BInstruct = modelRef({
-  name: "aws-bedrock/meta.llama3-1-8b-instruct-v1:0",
-  info: {
-    versions: ["meta.llama3-1-8b-instruct-v1:0"],
-    label: "Meta - Llama 3.1 8b Instruct",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: false,
-      systemRole: true,
-      output: ["text", "json"],
+export const metaLlama318BInstruct = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.meta.llama3-1-8b-instruct-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.meta.llama3-1-8b-instruct-v1:0`],
+      label: "Meta - Llama 3.1 8b Instruct",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
 export const metaLlama370BInstruct = modelRef({
   name: "aws-bedrock/meta.llama3-70b-instruct-v1:0",
@@ -681,7 +697,7 @@ export const metaLlama38BInstruct = modelRef({
 });
 
 export const SUPPORTED_AWS_BEDROCK_MODELS = (
-  infrenceRegion: string = "us",
+  inferenceRegion: string = "us",
 ): Record<string, any> => {
   return {
     "amazon.nova-pro-v1:0": amazonNovaProV1,
@@ -703,33 +719,34 @@ export const SUPPORTED_AWS_BEDROCK_MODELS = (
     "ai21.jamba-instruct-v1:0": ai21JambaInstructV1,
     "ai21.j2-mid-v1": ai21Jurassic2MidV1,
     "ai21.j2-ultra-v1": ai21Jurassic2UltraV1,
-    "meta.llama3-3-70b-instruct-v1:0": metaLlama3370BInstruct,
-    "meta.llama3-2-11b-instruct-v1:0": metaLlama3211BInstruct,
-    "meta.llama3-2-1b-instruct-v1:0": metaLlama321BInstruct,
-    "meta.llama3-2-3b-instruct-v1:0": metaLlama323BInstruct,
-    "meta.llama3-2-90b-instruct-v1:0": metaLlama3290BInstruct,
-    "meta.llama3-1-70b-instruct-v1:0": metaLlama3170BInstruct,
-    "meta.llama3-1-8b-instruct-v1:0": metaLlama318BInstruct,
+    [`${inferenceRegion}.meta.llama3-3-70b-instruct-v1:0`]:
+      metaLlama3370BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-2-11b-instruct-v1:0`]:
+      metaLlama3211BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-2-1b-instruct-v1:0`]: metaLlama321BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-2-3b-instruct-v1:0`]: metaLlama323BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-2-90b-instruct-v1:0`]:
+      metaLlama3290BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-1-70b-instruct-v1:0`]:
+      metaLlama3170BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-1-8b-instruct-v1:0`]: metaLlama318BInstruct(inferenceRegion),
     "meta.llama3-70b-instruct-v1:0": metaLlama370BInstruct,
     "meta.llama3-8b-instruct-v1:0": metaLlama38BInstruct,
-    [`${infrenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`]:
-      anthropicClaude35HaikuV1(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`]:
-      anthropicClaude35SonnetV2(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`]:
-      anthropicClaude35SonnetV1(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-3-opus-20240229-v1:0`]:
-      anthropicClaude3OpusV1(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`]:
-      anthropicClaude3HaikuV1(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`]:
-      anthropicClaude3SonnetV1(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-v2:1`]:
-      anthropicClaude21V1(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-v2`]:
-      anthropicClaude2V1(infrenceRegion),
-    [`${infrenceRegion}.anthropic.claude-instant-v1`]:
-      anthropicClaudeInstantV1(infrenceRegion),
+    "anthropic.claude-v2:1": anthropicClaude21V1,
+    "anthropic.claude-v2": anthropicClaude2V1,
+    "anthropic.claude-instant-v1": anthropicClaudeInstantV1,
+    [`${inferenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`]:
+      anthropicClaude35HaikuV1(inferenceRegion),
+    [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`]:
+      anthropicClaude35SonnetV2(inferenceRegion),
+    [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`]:
+      anthropicClaude35SonnetV1(inferenceRegion),
+    [`${inferenceRegion}.anthropic.claude-3-opus-20240229-v1:0`]:
+      anthropicClaude3OpusV1(inferenceRegion),
+    [`${inferenceRegion}.anthropic.claude-3-haiku-20240307-v1:0`]:
+      anthropicClaude3HaikuV1(inferenceRegion),
+    [`${inferenceRegion}.anthropic.claude-3-sonnet-20240229-v1:0`]:
+      anthropicClaude3SonnetV1(inferenceRegion),
   };
 };
 

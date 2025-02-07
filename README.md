@@ -69,6 +69,25 @@ const ai = genkit({
 });
 ```
 
+### Configuration with Inference Endpoint
+
+If you want to use a model that uses [Cross-region Inference Endpoints](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html), you can specify the region in the model configuration. Cross-region inference uses inference profiles to increase throughput and improve resiliency by routing your requests across multiple AWS Regions during peak utilization bursts:
+
+
+```typescript
+import { genkit, z } from 'genkit';
+import {awsBedrock, amazonNovaProV1} from "genkitx-aws-bedrock";
+
+const ai = genkit({
+  plugins: [
+    awsBedrock(),
+    model: anthropicClaude3SonnetV1("us"),
+  ]
+});
+```
+
+You can check more information about the available models in the [AWS Bedrock PLugin documentation](https://xavidop.github.io/genkitx-aws-bedrock/).
+
 ### Basic examples
 
 The simplest way to call the text generation model is by using the helper function `generate`:
