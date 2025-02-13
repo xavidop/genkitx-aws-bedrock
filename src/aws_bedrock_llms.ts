@@ -278,7 +278,9 @@ export const anthropicClaude35SonnetV2 = (
   return modelRef({
     name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`,
     info: {
-      versions: [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`],
+      versions: [
+        `${inferenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`,
+      ],
       label: "Anthropic - Claude 3.5 Sonnet V2",
       supports: {
         multiturn: true,
@@ -298,7 +300,9 @@ export const anthropicClaude35SonnetV1 = (
   return modelRef({
     name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`,
     info: {
-      versions: [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`],
+      versions: [
+        `${inferenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`,
+      ],
       label: "Anthropic - Claude 3.5 Sonnet V1",
       supports: {
         multiturn: true,
@@ -723,13 +727,16 @@ export const SUPPORTED_AWS_BEDROCK_MODELS = (
       metaLlama3370BInstruct(inferenceRegion),
     [`${inferenceRegion}.meta.llama3-2-11b-instruct-v1:0`]:
       metaLlama3211BInstruct(inferenceRegion),
-    [`${inferenceRegion}.meta.llama3-2-1b-instruct-v1:0`]: metaLlama321BInstruct(inferenceRegion),
-    [`${inferenceRegion}.meta.llama3-2-3b-instruct-v1:0`]: metaLlama323BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-2-1b-instruct-v1:0`]:
+      metaLlama321BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-2-3b-instruct-v1:0`]:
+      metaLlama323BInstruct(inferenceRegion),
     [`${inferenceRegion}.meta.llama3-2-90b-instruct-v1:0`]:
       metaLlama3290BInstruct(inferenceRegion),
     [`${inferenceRegion}.meta.llama3-1-70b-instruct-v1:0`]:
       metaLlama3170BInstruct(inferenceRegion),
-    [`${inferenceRegion}.meta.llama3-1-8b-instruct-v1:0`]: metaLlama318BInstruct(inferenceRegion),
+    [`${inferenceRegion}.meta.llama3-1-8b-instruct-v1:0`]:
+      metaLlama318BInstruct(inferenceRegion),
     "meta.llama3-70b-instruct-v1:0": metaLlama370BInstruct,
     "meta.llama3-8b-instruct-v1:0": metaLlama38BInstruct,
     "anthropic.claude-v2:1": anthropicClaude21V1,
@@ -1045,9 +1052,12 @@ export function toAwsBedrockRequestBody(
       model.info.supports.systemRole === true
         ? (awsBedrockSystemMessage as SystemContentBlock[])
         : [],
-    toolConfig: request.tools
-      ? { tools: request.tools.map(toAwsBedrockTool) }
-      : undefined,
+    toolConfig:
+      request.tools &&
+      model.info.supports.tools === true &&
+      request.tools.length > 0
+        ? { tools: request.tools.map(toAwsBedrockTool) }
+        : undefined,
     modelId: modelString,
     inferenceConfig: {
       maxTokens: request.config?.maxOutputTokens,
