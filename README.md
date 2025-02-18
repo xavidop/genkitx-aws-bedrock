@@ -41,33 +41,81 @@ if you are using Genkit version `<v0.9.0`, please use the plugin version `v1.9.0
 
 ### Configuration
 
-To use the plugin, you need to configure it with your AWS credentials key. You can do this by calling the `genkit` function:
+To use the plugin, you need to configure it with your AWS credentials. There are several approaches depending on your environment.
+
+#### Standard Initialization
+
+You can configure the plugin by calling the `genkit` function with your AWS region and model:
 
 ```typescript
 import { genkit, z } from 'genkit';
-import {awsBedrock, amazonNovaProV1} from "genkitx-aws-bedrock";
+import { awsBedrock, amazonNovaProV1 } from "genkitx-aws-bedrock";
 
 const ai = genkit({
   plugins: [
     awsBedrock({ region: "<my-region>" }),
-    model: amazonNovaProV1,
-  ]
+  ],
+   model: amazonNovaProV1,
 });
 ```
 
-You can also intialize the plugin in this way if you have set the `AWS_` environment variable:
+If you have set the `AWS_` environment variables, you can initialize it like this:
 
 ```typescript
 import { genkit, z } from 'genkit';
-import {awsBedrock, amazonNovaProV1} from "genkitx-aws-bedrock";
+import { awsBedrock, amazonNovaProV1 } from "genkitx-aws-bedrock";
 
 const ai = genkit({
   plugins: [
     awsBedrock(),
-    model: amazonNovaProV1,
-  ]
+  ],
+   model: amazonNovaProV1,
 });
 ```
+
+#### Production Environment Authentication
+
+In production environments, it is often necessary to install an additional library to handle authentication. One approach is to use the `@aws-sdk/credential-providers` package:
+
+```typescript
+import { fromEnv } from "@aws-sdk/credential-providers";
+const ai = genkit({
+  plugins: [
+    awsBedrock({
+      region: "us-east-1",
+      credentials: fromEnv(),
+    }),
+  ],
+});
+```
+
+Ensure you have a `.env` file with the necessary AWS credentials. Remember that the .env file must be added to your .gitignore to prevent sensitive credentials from being exposed.
+
+```
+AWS_ACCESS_KEY_ID = 
+AWS_SECRET_ACCESS_KEY =
+```
+
+#### Local Environment Authentication
+
+For local development, you can directly supply the credentials:
+
+```typescript
+const ai = genkit({
+  plugins: [
+    awsBedrock({
+      region: "us-east-1",
+      credentials: {
+        accessKeyId: awsAccessKeyId.value(),
+        secretAccessKey: awsSecretAccessKey.value(),
+      },
+    }),
+  ],
+});
+```
+
+Each approach allows you to manage authentication effectively based on your environment needs. 
+
 
 ### Configuration with Inference Endpoint
 
@@ -76,13 +124,13 @@ If you want to use a model that uses [Cross-region Inference Endpoints](https://
 
 ```typescript
 import { genkit, z } from 'genkit';
-import {awsBedrock, amazonNovaProV1} from "genkitx-aws-bedrock";
+import {awsBedrock, amazonNovaProV1, anthropicClaude35SonnetV2} from "genkitx-aws-bedrock";
 
 const ai = genkit({
   plugins: [
     awsBedrock(),
-    model: anthropicClaude3SonnetV1("us"),
-  ]
+  ],
+   model: anthropicClaude35SonnetV2("us"),
 });
 ```
 
