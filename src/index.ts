@@ -22,6 +22,7 @@ import {
   mistral7BInstructV02,
   mistral8x7BInstructV01,
   anthropicClaude35HaikuV1,
+  anthropicClaude37SonnetV1,
   anthropicClaude35SonnetV2,
   anthropicClaude3OpusV1,
   anthropicClaude3HaikuV1,
