@@ -272,6 +272,28 @@ export const anthropicClaude3OpusV1 = (
   });
 };
 
+export const anthropicClaude37SonnetV1 = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.anthropic.claude-3-7-sonnet-20250219-v1:0`,
+    info: {
+      versions: [
+        `${inferenceRegion}.anthropic.claude-3-7-sonnet-20250219-v1:0`,
+      ],
+      label: "Anthropic - Claude 3.7 Sonnet V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
+    },
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
+
 export const anthropicClaude35SonnetV2 = (
   inferenceRegion: string = "us",
 ): ModelReference<typeof GenerationCommonConfigSchema> => {
@@ -744,6 +766,8 @@ export const SUPPORTED_AWS_BEDROCK_MODELS = (
     "anthropic.claude-instant-v1": anthropicClaudeInstantV1,
     [`${inferenceRegion}.anthropic.claude-3-5-haiku-20241022-v1:0`]:
       anthropicClaude35HaikuV1(inferenceRegion),
+    [`${inferenceRegion}.anthropic.claude-3-7-sonnet-20250219-v1:0`]:
+      anthropicClaude37SonnetV1(inferenceRegion),
     [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20241022-v2:0`]:
       anthropicClaude35SonnetV2(inferenceRegion),
     [`${inferenceRegion}.anthropic.claude-3-5-sonnet-20240620-v1:0`]:
