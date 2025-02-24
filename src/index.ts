@@ -85,6 +85,7 @@ export {
   metaLlama370BInstruct,
   metaLlama38BInstruct,
   anthropicClaude35HaikuV1,
+  anthropicClaude37SonnetV1,
   anthropicClaude35SonnetV2,
   anthropicClaude3OpusV1,
   anthropicClaude3HaikuV1,
