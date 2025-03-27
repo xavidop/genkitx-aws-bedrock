@@ -116,7 +116,18 @@ export function awsBedrock(options?: PluginOptions) {
         : typeof options?.region === "function"
           ? await options.region()
           : undefined;
-    const inferenceRegion = region ? region.substring(0, 2) : "us";
+    let inferenceRegion = '';
+    if (!region) {
+      inferenceRegion = "us"; // default to us
+    } else if (region.includes('us-gov')) {
+      inferenceRegion = "us-gov";
+    } else if (region.includes('us')) {
+      inferenceRegion = "us";
+    } else if (region.includes('eu-')) {
+      inferenceRegion = "eu";
+    } else if (region.includes('ap-')) {
+      inferenceRegion = "apac";
+    }
 
     Object.keys(SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)).forEach(
       (name) => {
