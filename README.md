@@ -28,7 +28,7 @@ This Genkit plugin allows to use AWS Bedrock through their official APIs.
 
 ## Installation
 
-Install the plugin in your project with your favourite package manager:
+Install the plugin in your project with your favourite package manager
 
 - `npm install genkitx-aws-bedrock`
 - `pnpm add genkitx-aws-bedrock`
