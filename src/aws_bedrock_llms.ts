@@ -984,10 +984,17 @@ function fromAwsBedrockChoice(
   choice: ConverseCommandOutput,
   jsonMode = false,
 ): ModelResponseData {
-  const toolRequestParts =
-    choice.output?.message?.content && choice.output.message.content[0].toolUse
-      ? fromAwsBedrockToolCall(choice.output.message.content[0].toolUse)
-      : [];
+
+  // Find all tool use blocks in the content array
+  const toolRequestParts: any[] = [];
+  if (choice.output?.message?.content) {
+    for (const contentBlock of choice.output.message.content) {
+      if (contentBlock.toolUse) {
+        toolRequestParts.push(...fromAwsBedrockToolCall(contentBlock.toolUse));
+      }
+    }
+  }
+  
   return {
     finishReason:
       "stopReason" in choice ? finishReasonMap[choice.stopReason!] : "other",
