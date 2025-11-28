@@ -981,9 +981,7 @@ function fromAwsBedrockToolCall(toolCall: ToolUseBlock) {
   ];
 }
 
-function extractTextFromContent(
-  content: ContentBlock[] | undefined,
-): string {
+function extractTextFromContent(content: ContentBlock[] | undefined): string {
   if (!content) return "";
 
   // Find the content block that contains text (skip reasoningContent blocks)
@@ -1022,9 +1020,7 @@ function fromAwsBedrockChoice(
           : [
               jsonMode
                 ? {
-                    data: textContent
-                      ? JSON.parse(textContent)
-                      : {},
+                    data: textContent ? JSON.parse(textContent) : {},
                   }
                 : { text: textContent },
             ],
@@ -1214,8 +1210,10 @@ export function awsBedrockModel(
         const converseResponse = await client.send(command);
 
         return {
-          message: fromAwsBedrockChoice(converseResponse, request.output?.format === "json")
-            .message,
+          message: fromAwsBedrockChoice(
+            converseResponse,
+            request.output?.format === "json",
+          ).message,
           usage: {
             inputTokens: converseResponse.usage?.inputTokens || 0,
             outputTokens: converseResponse.usage?.outputTokens || 0,
