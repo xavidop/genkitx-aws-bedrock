@@ -23,7 +23,6 @@ import {
   Part,
   Role,
   ToolRequestPart,
-  Genkit,
   ModelReference,
 } from "genkit";
 
@@ -32,7 +31,10 @@ import {
   ModelAction,
   modelRef,
   ToolDefinition,
+  GenerateResponseChunkData,
 } from "genkit/model";
+
+import { model } from "genkit/plugin";
 
 import {
   BedrockRuntimeClient,
@@ -48,7 +50,6 @@ import {
   SystemContentBlock,
   ContentBlockDelta,
   ImageFormat,
-  StopReason,
   Tool,
 } from "@aws-sdk/client-bedrock-runtime";
 
@@ -980,11 +981,24 @@ function fromAwsBedrockToolCall(toolCall: ToolUseBlock) {
   ];
 }
 
+function extractTextFromContent(
+  content: ContentBlock[] | undefined,
+): string {
+  if (!content) return "";
+
+  // Find the content block that contains text (skip reasoningContent blocks)
+  for (const block of content) {
+    if ("text" in block && block.text) {
+      return block.text;
+    }
+  }
+  return "";
+}
+
 function fromAwsBedrockChoice(
   choice: ConverseCommandOutput,
   jsonMode = false,
 ): ModelResponseData {
-
   // Find all tool use blocks in the content array
   const toolRequestParts: any[] = [];
   if (choice.output?.message?.content) {
@@ -994,7 +1008,9 @@ function fromAwsBedrockChoice(
       }
     }
   }
-  
+
+  const textContent = extractTextFromContent(choice.output?.message?.content);
+
   return {
     finishReason:
       "stopReason" in choice ? finishReasonMap[choice.stopReason!] : "other",
@@ -1006,30 +1022,12 @@ function fromAwsBedrockChoice(
           : [
               jsonMode
                 ? {
-                    data: choice.output?.message?.content?.[0]?.text
-                      ? JSON.parse(
-                          choice.output.message.content?.[0]?.text ?? "{}",
-                        )
+                    data: textContent
+                      ? JSON.parse(textContent)
                       : {},
                   }
-                : { text: choice.output?.message?.content?.[0]?.text || "" },
+                : { text: textContent },
             ],
-    },
-    custom: {},
-  };
-}
-
-function fromAwsBedrockChunkChoice(
-  choice?: ContentBlockDelta,
-  finishReasonInput?: string,
-): ModelResponseData {
-  return {
-    finishReason: finishReasonInput
-      ? finishReasonMap[finishReasonInput] || "other"
-      : "unknown",
-    message: {
-      role: "model",
-      content: [{ text: choice?.text ?? "" }],
     },
     custom: {},
   };
@@ -1040,8 +1038,15 @@ export function toAwsBedrockRequestBody(
   request: GenerateRequest<typeof GenerationCommonConfigSchema>,
   inferenceRegion: string,
 ) {
-  const model = SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[modelName];
-  if (!model) throw new Error(`Unsupported model: ${modelName}`);
+  const model = SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[modelName] || {
+    info: {
+      supports: {
+        output: ["text", "json"],
+        systemRole: true,
+        tools: true,
+      },
+    },
+  };
   const awsBedrockMessages = toAwsBedrockMessages(request.messages);
 
   const awsBedrockSystemMessage = getSystemMessage(request.messages) || [];
@@ -1105,64 +1110,120 @@ export function toAwsBedrockRequestBody(
 export function awsBedrockModel(
   name: string,
   client: BedrockRuntimeClient,
-  ai: Genkit,
   inferenceRegion: string,
 ): ModelAction<typeof GenerationCommonConfigSchema> {
   const modelId = `aws-bedrock/${name}`;
-  const model = SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[name];
-  if (!model) throw new Error(`Unsupported model: ${name}`);
+  const modelReference = SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[name];
 
-  return ai.defineModel(
-    {
-      name: modelId,
-      ...model.info,
-      configSchema:
-        SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[name].configSchema,
-    },
-    async (request, streamingCallback) => {
+  // If model is not in the supported list, create a default configuration
+  const modelInfo = modelReference
+    ? {
+        name: modelId,
+        ...modelReference.info,
+        configSchema:
+          SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)[name].configSchema,
+      }
+    : {
+        name: modelId,
+        info: {
+          label: `AWS Bedrock - ${name}`,
+          supports: {
+            multiturn: true,
+            tools: true,
+            media: true,
+            systemRole: true,
+            output: ["text", "json"],
+          },
+        },
+        configSchema: GenerationCommonConfigSchema,
+      };
+
+  return model(
+    modelInfo,
+    async (
+      request: GenerateRequest<typeof GenerationCommonConfigSchema>,
+      {
+        streamingRequested,
+        sendChunk,
+      }: {
+        streamingRequested: boolean;
+        sendChunk: (chunk: GenerateResponseChunkData) => void;
+        abortSignal: AbortSignal;
+      },
+    ) => {
       let response: ConverseStreamCommandOutput | ConverseCommandOutput;
       const body = toAwsBedrockRequestBody(name, request, inferenceRegion);
-      if (streamingCallback) {
+      if (streamingRequested) {
         const command = new ConverseStreamCommand(body);
         response = await client.send(command);
 
+        // Accumulate text content from streaming response
+        let accumulatedText = "";
+        let inputTokens = 0;
+        let outputTokens = 0;
+        let totalTokens = 0;
+
         for await (const event of response.stream!) {
-          let finishReason: StopReason | undefined;
           if (event.messageStop) {
-            finishReason = event.messageStop!.stopReason!;
-            const c = fromAwsBedrockChunkChoice(undefined, finishReason);
-            streamingCallback({
+            sendChunk({
               index: 0,
-              content: [{ ...c, custom: c.custom as Record<string, any> }],
+              content: [],
             });
           }
 
           if (event.contentBlockDelta) {
             const delta = event.contentBlockDelta.delta as ContentBlockDelta;
-            const c = fromAwsBedrockChunkChoice(delta, finishReason);
-            streamingCallback({
-              index: 0,
-              content: [{ ...c, custom: c.custom as Record<string, any> }],
-            });
+            // Only process text deltas, skip reasoning content deltas
+            if (delta && "text" in delta && delta.text) {
+              accumulatedText += delta.text;
+              sendChunk({
+                index: 0,
+                content: [{ text: delta.text }],
+              });
+            }
+          }
+
+          // Capture usage metadata from the stream
+          if (event.metadata?.usage) {
+            inputTokens = event.metadata.usage.inputTokens || 0;
+            outputTokens = event.metadata.usage.outputTokens || 0;
+            totalTokens = event.metadata.usage.totalTokens || 0;
           }
         }
+
+        // Return accumulated content for streaming
+        const jsonMode = request.output?.format === "json";
+        return {
+          message: {
+            role: "model" as const,
+            content: [
+              jsonMode
+                ? { data: accumulatedText ? JSON.parse(accumulatedText) : {} }
+                : { text: accumulatedText },
+            ],
+          },
+          usage: {
+            inputTokens,
+            outputTokens,
+            totalTokens,
+          },
+          custom: response,
+        };
       } else {
         const command = new ConverseCommand(body);
-        response = await client.send(command);
+        const converseResponse = await client.send(command);
+
+        return {
+          message: fromAwsBedrockChoice(converseResponse, request.output?.format === "json")
+            .message,
+          usage: {
+            inputTokens: converseResponse.usage?.inputTokens || 0,
+            outputTokens: converseResponse.usage?.outputTokens || 0,
+            totalTokens: converseResponse.usage?.totalTokens || 0,
+          },
+          custom: converseResponse,
+        };
       }
-      return {
-        message:
-          "output" in response
-            ? fromAwsBedrockChoice(response, request.output?.format === "json")
-                .message
-            : { role: "model", content: [] },
-        usage: {
-          inputTokens: "usage" in response ? response.usage?.inputTokens : 0,
-          outputTokens: "usage" in response ? response.usage?.outputTokens : 0,
-          totalTokens: "usage" in response ? response.usage?.totalTokens : 0,
-        },
-        custom: response,
-      };
     },
   );
 }

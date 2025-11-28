@@ -15,9 +15,10 @@
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
-import { embedderRef, Genkit } from "genkit";
+import { embedderRef as createEmbedderRef } from "genkit";
 
 import { z } from "zod";
+import { embedder } from "genkit/plugin";
 import {
   BedrockRuntimeClient,
   InvokeModelCommand,
@@ -35,7 +36,7 @@ export type TextEmbeddingGeckoConfig = z.infer<
 
 export const TextEmbeddingInputSchema = z.string();
 
-export const amazonTitanEmbedTextV2 = embedderRef({
+export const amazonTitanEmbedTextV2 = createEmbedderRef({
   name: "aws-bedrock/amazon.titan-embed-text-v2:0",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -47,7 +48,7 @@ export const amazonTitanEmbedTextV2 = embedderRef({
   },
 });
 
-export const amazonTitanEmbedMultimodalV2 = embedderRef({
+export const amazonTitanEmbedMultimodalV2 = createEmbedderRef({
   name: "aws-bedrock/amazon.titan-embed-image-v1",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -59,7 +60,7 @@ export const amazonTitanEmbedMultimodalV2 = embedderRef({
   },
 });
 
-export const amazonTitanEmbedTextG1V1 = embedderRef({
+export const amazonTitanEmbedTextG1V1 = createEmbedderRef({
   name: "aws-bedrock/amazon.titan-embed-text-v1",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -71,7 +72,7 @@ export const amazonTitanEmbedTextG1V1 = embedderRef({
   },
 });
 
-export const cohereEmbedEnglishV3 = embedderRef({
+export const cohereEmbedEnglishV3 = createEmbedderRef({
   name: "aws-bedrock/cohere.embed-english-v3",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -83,7 +84,7 @@ export const cohereEmbedEnglishV3 = embedderRef({
   },
 });
 
-export const cohereEmbedMultilingualV3 = embedderRef({
+export const cohereEmbedMultilingualV3 = createEmbedderRef({
   name: "aws-bedrock/cohere.embed-multilingual-v3",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -103,25 +104,23 @@ export const SUPPORTED_EMBEDDING_MODELS: Record<string, any> = {
   "cohere.embed-multilingual-v3": cohereEmbedMultilingualV3,
 };
 
-export function awsBedrockEmbedder(
-  name: string,
-  ai: Genkit,
-  client: BedrockRuntimeClient,
-) {
-  const model = SUPPORTED_EMBEDDING_MODELS[name];
+export function awsBedrockEmbedder(name: string, client: BedrockRuntimeClient) {
+  const modelRef = SUPPORTED_EMBEDDING_MODELS[name];
+  if (!modelRef) throw new Error(`Unsupported model: ${name}`);
 
-  return ai.defineEmbedder(
+  return embedder(
     {
-      info: model.info!,
+      info: modelRef.info!,
       configSchema: TextEmbeddingConfigSchema,
-      name: model.name,
+      name: modelRef.name,
     },
-    async (input, options) => {
+    async (request) => {
+      const { input, options } = request;
       const body: InvokeModelCommandInput = {
         modelId: name,
         contentType: "application/json",
         body: JSON.stringify({
-          inputText: input.map((d) => d.text).join(","),
+          inputText: input.map((d: any) => d.text).join(","),
           dimensions: options?.dimensions,
         }),
       };

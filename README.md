@@ -203,6 +203,55 @@ console.log(result.then((res) => res.text));
 
 For more detailed examples and the explanation of other functionalities, refer to the [official Genkit documentation](https://firebase.google.com/docs/genkit/get-started).
 
+## Using Custom Models
+
+If you want to use a model that is not exported by this plugin, you can register it using the `customModels` option when initializing the plugin:
+
+```typescript
+import { genkit, z } from 'genkit';
+import { awsBedrock } from 'genkitx-aws-bedrock';
+
+const ai = genkit({
+  plugins: [
+    awsBedrock({
+      region: 'us-east-1',
+      customModels: ['openai.gpt-oss-20b-1:0'], // Register custom models
+    }),
+  ],
+});
+
+// Use the custom model by specifying its name as a string
+export const customModelFlow = ai.defineFlow(
+  {
+    name: 'customModelFlow',
+    inputSchema: z.string(),
+    outputSchema: z.string(),
+  },
+  async (subject) => {
+    const llmResponse = await ai.generate({
+      model: 'aws-bedrock/openai.gpt-oss-20b-1:0', // Use any registered custom model
+      prompt: `Tell me about ${subject}`,
+    });
+    return llmResponse.text;
+  }
+);
+```
+
+Alternatively, you can define a custom model outside of the plugin initialization:
+
+```typescript
+import { defineAwsBedrockModel } from 'genkitx-aws-bedrock';
+
+const customModel = defineAwsBedrockModel('openai.gpt-oss-20b-1:0', {
+  region: 'us-east-1'
+});
+
+const response = await ai.generate({
+  model: customModel,
+  prompt: 'Hello!'
+});
+```
+
 ## Supported models
 
 This plugin supports all currently available **Chat/Completion** and **Embeddings** models from AWS Bedrock. This plugin supports image input and multimodal models.

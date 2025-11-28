@@ -1,9 +1,10 @@
-import { Genkit } from "genkit";
-import { genkitPlugin } from "genkit/plugin";
+import { genkitPluginV2, type ResolvableAction } from "genkit/plugin";
 import {
   BedrockRuntimeClient,
   BedrockRuntimeClientConfig,
 } from "@aws-sdk/client-bedrock-runtime";
+import { ModelAction } from "genkit/model";
+import { GenerationCommonConfigSchema } from "genkit";
 
 import {
   awsBedrockModel,
@@ -104,40 +105,103 @@ export {
   cohereEmbedMultilingualV3,
 };
 
-export type PluginOptions = BedrockRuntimeClientConfig;
+export interface PluginOptions extends BedrockRuntimeClientConfig {
+  /**
+   * Additional model names to register that are not in the predefined list.
+   * These models will be available using the 'aws-bedrock/model-name' format.
+   * @example ['custom.my-custom-model-v1:0']
+   */
+  customModels?: string[];
+}
+
+/**
+ * Defines a custom AWS Bedrock model that is not exported by the plugin
+ * @param name - The name of the model (e.g., "custom.my-model-v1:0")
+ * @param options - Plugin options including AWS credentials and region
+ * @returns A ModelAction that can be used with Genkit
+ *
+ * @example
+ * ```typescript
+ * import { defineAwsBedrockModel } from 'genkitx-aws-bedrock';
+ *
+ * const customModel = defineAwsBedrockModel('custom.my-model-v1:0', {
+ *   region: 'us-east-1'
+ * });
+ *
+ * const response = await ai.generate({
+ *   model: customModel,
+ *   prompt: 'Hello!'
+ * });
+ * ```
+ */
+export function defineAwsBedrockModel(
+  name: string,
+  options?: PluginOptions,
+): ModelAction<typeof GenerationCommonConfigSchema> {
+  const client = new BedrockRuntimeClient(options || {});
+
+  const region =
+    typeof options?.region === "string" ? options.region : undefined;
+  let inferenceRegion = "";
+  if (!region) {
+    inferenceRegion = "us"; // default to us
+  } else if (region.includes("us-gov")) {
+    inferenceRegion = "us-gov";
+  } else if (region.includes("us")) {
+    inferenceRegion = "us";
+  } else if (region.includes("eu-")) {
+    inferenceRegion = "eu";
+  } else if (region.includes("ap-")) {
+    inferenceRegion = "apac";
+  }
+
+  return awsBedrockModel(name, client, inferenceRegion);
+}
 
 export function awsBedrock(options?: PluginOptions) {
-  return genkitPlugin("aws-bedrock", async (ai: Genkit) => {
-    const client = new BedrockRuntimeClient(options || {});
+  const client = new BedrockRuntimeClient(options || {});
 
-    const region =
-      typeof options?.region === "string"
-        ? options.region
-        : typeof options?.region === "function"
-          ? await options.region()
-          : undefined;
-    let inferenceRegion = '';
-    if (!region) {
-      inferenceRegion = "us"; // default to us
-    } else if (region.includes('us-gov')) {
-      inferenceRegion = "us-gov";
-    } else if (region.includes('us')) {
-      inferenceRegion = "us";
-    } else if (region.includes('eu-')) {
-      inferenceRegion = "eu";
-    } else if (region.includes('ap-')) {
-      inferenceRegion = "apac";
-    }
+  const region =
+    typeof options?.region === "string" ? options.region : undefined;
+  let inferenceRegion = "";
+  if (!region) {
+    inferenceRegion = "us"; // default to us
+  } else if (region.includes("us-gov")) {
+    inferenceRegion = "us-gov";
+  } else if (region.includes("us")) {
+    inferenceRegion = "us";
+  } else if (region.includes("eu-")) {
+    inferenceRegion = "eu";
+  } else if (region.includes("ap-")) {
+    inferenceRegion = "apac";
+  }
 
-    Object.keys(SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion)).forEach(
-      (name) => {
-        awsBedrockModel(name, client, ai, inferenceRegion);
-      },
-    );
+  return genkitPluginV2({
+    name: "aws-bedrock",
+    init: async () => {
+      const actions: ResolvableAction[] = [];
 
-    Object.keys(SUPPORTED_EMBEDDING_MODELS).forEach((name) =>
-      awsBedrockEmbedder(name, ai, client),
-    );
+      // Register models
+      for (const name of Object.keys(
+        SUPPORTED_AWS_BEDROCK_MODELS(inferenceRegion),
+      )) {
+        actions.push(awsBedrockModel(name, client, inferenceRegion));
+      }
+
+      // Register custom models if provided
+      if (options?.customModels) {
+        for (const name of options.customModels) {
+          actions.push(awsBedrockModel(name, client, inferenceRegion));
+        }
+      }
+
+      // Register embedders
+      for (const name of Object.keys(SUPPORTED_EMBEDDING_MODELS)) {
+        actions.push(awsBedrockEmbedder(name, client));
+      }
+
+      return actions;
+    },
   });
 }
 
