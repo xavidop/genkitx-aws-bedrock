@@ -53,21 +53,25 @@ import {
   Tool,
 } from "@aws-sdk/client-bedrock-runtime";
 
-export const amazonNovaProV1 = modelRef({
-  name: "aws-bedrock/amazon.nova-pro-v1:0",
-  info: {
-    versions: ["amazon.nova-pro-v1:0"],
-    label: "Amazon - Nova Pro V1",
-    supports: {
-      multiturn: true,
-      tools: true,
-      media: true,
-      systemRole: true,
-      output: ["text", "json"],
+export const amazonNovaProV1 = (
+  inferenceRegion: string = "us",
+): ModelReference<typeof GenerationCommonConfigSchema> => {
+  return modelRef({
+    name: `aws-bedrock/${inferenceRegion}.amazon.nova-pro-v1:0`,
+    info: {
+      versions: [`${inferenceRegion}.amazon.nova-pro-v1:0`],
+      label: "Amazon - Nova Pro V1",
+      supports: {
+        multiturn: true,
+        tools: true,
+        media: true,
+        systemRole: true,
+        output: ["text", "json"],
+      },
     },
-  },
-  configSchema: GenerationCommonConfigSchema,
-});
+    configSchema: GenerationCommonConfigSchema,
+  });
+};
 
 export const amazonNovaLiteV1 = modelRef({
   name: "aws-bedrock/amazon.nova-lite-v1:0",
@@ -727,7 +731,7 @@ export const SUPPORTED_AWS_BEDROCK_MODELS = (
   inferenceRegion: string = "us",
 ): Record<string, any> => {
   return {
-    "amazon.nova-pro-v1:0": amazonNovaProV1,
+    [`${inferenceRegion}.amazon.nova-pro-v1:0`]: amazonNovaProV1(inferenceRegion),
     "amazon.nova-lite-v1:0": amazonNovaLiteV1,
     "amazon.nova-micro-v1:0": amazonNovaMicroV1,
     "amazon.titan-text-premier-v1:0": amazonTitanTextG1PremierV1,
