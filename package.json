@@ -1,6 +1,6 @@
 {
   "name": "genkitx-aws-bedrock",
-  "description": "Firebase Genkit AI framework plugin for AWS Bedrock APIs.",
+  "description": "Genkit AI framework plugin for AWS Bedrock APIs.",
   "keywords": [
     "genkit",
     "genkit-plugin",
@@ -18,7 +18,7 @@
   "module": "./lib/esm/index.mjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xavidop/genkitx-aws-bedrock.git"
+    "url": "git+https://github.com/genkit-ai/aws-bedrock-js-plugin.git"
   },
   "author": "Xavier Portilla Edo",
   "license": "Apache-2.0",

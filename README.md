@@ -1,28 +1,26 @@
-![Firebase Genkit + AWS Bedrock](https://github.com/xavidop/genkitx-aws-bedrock/blob/main/assets/genkit-aws-bedrock.png?raw=true)
-
 <h1 align="center">
-   Firebase Genkit <> AWS Bedrock Plugin
+  Genkit <> AWS Bedrock Plugin
 </h1>
 
-<h4 align="center">AWS Bedrock Community Plugin for Google Firebase Genkit</h4>
+<h4 align="center">AWS Bedrock Community Plugin for Google Genkit</h4>
 
 <div align="center">
-   <img alt="GitHub version" src="https://img.shields.io/github/v/release/xavidop/genkitx-aws-bedrock">
+   <img alt="GitHub version" src="https://img.shields.io/github/v/release/genkit-ai/aws-bedrock-js-plugin">
    <img alt="NPM Downloads" src="https://img.shields.io/npm/dw/genkitx-aws-bedrock">
-   <img alt="GitHub License" src="https://img.shields.io/github/license/xavidop/genkitx-aws-bedrock">
+   <img alt="GitHub License" src="https://img.shields.io/github/license/genkit-ai/aws-bedrock-js-plugin">
    <img alt="Static Badge" src="https://img.shields.io/badge/yes-a?label=maintained">
 </div>
 
 <div align="center">
-   <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/xavidop/genkitx-aws-bedrock?color=blue">
-   <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues-pr/xavidop/genkitx-aws-bedrock?color=blue">
-   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/xavidop/genkitx-aws-bedrock">
+   <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/genkit-ai/aws-bedrock-js-plugin?color=blue">
+   <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues-pr/genkit-ai/aws-bedrock-js-plugin?color=blue">
+   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/genkit-ai/aws-bedrock-js-plugin">
 </div>
 
 </br>
 
 **`genkitx-aws-bedrock`** is a community plugin for using AWS Bedrock APIs with
-[Firebase Genkit](https://github.com/firebase/genkit). Built by [**Xavier Portilla Edo**](https://github.com/xavidop).
+[Genkit](https://github.com/firebase/genkit). Built by [**Xavier Portilla Edo**](https://github.com/xavidop).
 
 This Genkit plugin allows to use AWS Bedrock through their official APIs.
 
@@ -201,7 +199,7 @@ const result = ai.generate({
 console.log(result.then((res) => res.text));
 ```
 
-For more detailed examples and the explanation of other functionalities, refer to the [official Genkit documentation](https://firebase.google.com/docs/genkit/get-started).
+For more detailed examples and the explanation of other functionalities, refer to the [official Genkit documentation](https://genkit.dev/).
 
 ## Using Custom Models
 
@@ -262,23 +260,17 @@ You can find the full API reference in the [API Reference Documentation](https:/
 
 ## Contributing
 
-Want to contribute to the project? That's awesome! Head over to our [Contribution Guidelines](https://github.com/xavidop/genkitx-aws-bedrock/blob/main/CONTRIBUTING.md).
+Want to contribute to the project? That's awesome! Head over to our [Contribution Guidelines](https://github.com/genkit-ai/aws-bedrock-js-plugin/blob/main/CONTRIBUTING.md).
 
 ## Need support?
 
 > [!NOTE]  
-> This repository depends on Google's Firebase Genkit. For issues and questions related to Genkit, please refer to instructions available in [Genkit's repository](https://github.com/firebase/genkit).
+> This repository depends on Google's Genkit. For issues and questions related to Genkit, please refer to instructions available in [Genkit's repository](https://github.com/firebase/genkit).
 
-Reach out by opening a discussion on [GitHub Discussions](https://github.com/xavidop/genkitx-aws-bedrock/discussions).
-
-## Credits
-
-This plugin is proudly maintained by Xavier Portilla Edo [**Xavier Portilla Edo**](https://github.com/xavidop).
-
-I got the inspiration, structure and patterns to create this plugin from the [Genkit Community Plugins](https://github.com/TheFireCo/genkit-plugins) repository built by the [Fire Compnay](https://github.com/TheFireCo) as well as the [ollama plugin](https://firebase.google.com/docs/genkit/plugins/ollama).
+Reach out by opening a discussion on [GitHub Discussions](https://github.com/genkit-ai/aws-bedrock-js-plugin/discussions).
 
 ## License
 
-This project is licensed under the [Apache 2.0 License](https://github.com/xavidop/genkitx-aws-bedrock/blob/main/LICENSE).
+This project is licensed under the [Apache 2.0 License](https://github.com/genkit-ai/aws-bedrock-js-plugin/blob/main/LICENSE).
 
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202%2E0-lightgrey.svg)](https://github.com/xavidop/genkitx-aws-bedrock/blob/main/LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202%2E0-lightgrey.svg)](https://github.com/genkit-ai/aws-bedrock-js-plugin/blob/main/LICENSE)

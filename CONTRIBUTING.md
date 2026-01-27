@@ -7,7 +7,7 @@ This document describes our development process. Following these guidelines show
 Before reading further, please note that:
 
 > [!NOTE]  
-> This repository depends on Google's Firebase Genkit. For issues and questions related to Genkit, please refer to instructions available in [Genkit's repository](https://github.com/firebase/genkit).
+> This repository depends on Google's Genkit. For issues and questions related to Genkit, please refer to instructions available in [Genkit's repository](https://github.com/firebase/genkit).
 
 ## Table of Contents
 
@@ -37,7 +37,7 @@ By participating in this project and submitting contributions, you agree to lice
 
 ## Questions
 
-If you have any support questions, please open a [GitHub discussion](https://github.com/xavidop/genkitx-aws-bedrock/discussions). The GitHub issue tracker is not for support-related requests.
+If you have any support questions, please open a [GitHub discussion](https://github.com/genkit-ai/aws-bedrock-js-plugin/discussions). The GitHub issue tracker is not for support-related requests.
 
 ## Feature Requests
 
@@ -49,7 +49,7 @@ Small Changes can directly be crafted and submitted to the GitHub Repository as 
 
 **If you discover a security vulnerability, do NOT open an issue. Email xavierportillaedo@gmail.com instead.**
 
-Before you submit your issue, please [search the issue archive](https://github.com/xavidop/genkitx-aws-bedrock/issues) - your issue might have already been identified or addressed.
+Before you submit your issue, please [search the issue archive](https://github.com/genkit-ai/aws-bedrock-js-plugin/issues) - your issue might have already been identified or addressed.
 
 If you find a bug in the source code, you can help us by submitting an issue or, even better, you can submit a Pull Request with a fix.
 
@@ -80,7 +80,7 @@ You can set up the local development environment as follows:
 
 ### Finding an Issue
 
-The list of open feature requests and bugs can be found on our on our [GitHub issue tracker](https://github.com/xavidop/genkitx-aws-bedrock/issues). Pick an unassigned issue that you think you can accomplish and add a comment that you are attempting to do it.
+The list of open feature requests and bugs can be found on our on our [GitHub issue tracker](https://github.com/genkit-ai/aws-bedrock-js-plugin/issues). Pick an unassigned issue that you think you can accomplish and add a comment that you are attempting to do it.
 
 ### Development Process
 
