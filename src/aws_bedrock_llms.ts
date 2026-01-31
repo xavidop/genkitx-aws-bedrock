@@ -731,7 +731,8 @@ export const SUPPORTED_AWS_BEDROCK_MODELS = (
   inferenceRegion: string = "us",
 ): Record<string, any> => {
   return {
-    [`${inferenceRegion}.amazon.nova-pro-v1:0`]: amazonNovaProV1(inferenceRegion),
+    [`${inferenceRegion}.amazon.nova-pro-v1:0`]:
+      amazonNovaProV1(inferenceRegion),
     "amazon.nova-lite-v1:0": amazonNovaLiteV1,
     "amazon.nova-micro-v1:0": amazonNovaMicroV1,
     "amazon.titan-text-premier-v1:0": amazonTitanTextG1PremierV1,
@@ -802,11 +803,14 @@ function toAwsBedrockbRole(role: Role): string {
 }
 
 function toAwsBedrockTool(tool: ToolDefinition): Tool {
+  // Handle both inputSchema and inputJsonSchema (from MCP tools)
+  // inputJsonSchema is mutually exclusive with inputSchema in ToolConfig
+  const schema = tool.inputSchema || (tool as any).inputJsonSchema;
   return {
     toolSpec: {
       name: tool.name,
       description: tool.description,
-      inputSchema: tool.inputSchema ? { json: tool.inputSchema } : undefined,
+      inputSchema: schema ? { json: schema } : undefined,
     },
   };
 }
