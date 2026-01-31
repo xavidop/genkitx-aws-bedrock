@@ -802,11 +802,14 @@ function toAwsBedrockbRole(role: Role): string {
 }
 
 function toAwsBedrockTool(tool: ToolDefinition): Tool {
+  // ToolDefinition may have either inputSchema or inputJsonSchema (mutually exclusive)
+  // MCP tools use inputJsonSchema, while regular tools use inputSchema
+  const schema = tool.inputSchema || (tool as any).inputJsonSchema;
   return {
     toolSpec: {
       name: tool.name,
       description: tool.description,
-      inputSchema: tool.inputSchema ? { json: tool.inputSchema } : undefined,
+      inputSchema: schema ? { json: schema } : undefined,
     },
   };
 }
