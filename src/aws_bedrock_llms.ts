@@ -801,10 +801,18 @@ function toAwsBedrockbRole(role: Role): string {
   }
 }
 
+// Extended ToolDefinition to support inputJsonSchema from MCP tools
+// This property exists in genkit 1.28.0+ and MCP-sourced tools but may not
+// be present in older type definitions
+interface ExtendedToolDefinition extends ToolDefinition {
+  inputJsonSchema?: Record<string, any> | null;
+}
+
 function toAwsBedrockTool(tool: ToolDefinition): Tool {
   // ToolDefinition may have either inputSchema or inputJsonSchema (mutually exclusive)
   // MCP tools use inputJsonSchema, while regular tools use inputSchema
-  const schema = tool.inputSchema || (tool as any).inputJsonSchema;
+  const extendedTool = tool as ExtendedToolDefinition;
+  const schema = extendedTool.inputSchema || extendedTool.inputJsonSchema;
   return {
     toolSpec: {
       name: tool.name,
