@@ -26,7 +26,7 @@
     "@aws-sdk/client-bedrock-runtime": "^3.941.0"
   },
   "peerDependencies": {
-    "genkit": "^1.24.0"
+    "genkit": "^1.28.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.0",
